@@ -36,6 +36,7 @@ async function run() {
 
 
         const brandDataCollection = client.db("brandData").collection("data")
+        const topRatedData = client.db("topRatedData").collection("topData")
         const userCollection = client.db("brandDB").collection("brand");
         const addToCartData = client.db("cartData").collection("cart");
 
@@ -60,6 +61,11 @@ async function run() {
             const query = { _id: new ObjectId(id) };
             const user = await userCollection.findOne(query)
             res.send(user)
+        })
+        app.get('/topRateProduct', async(req, res) => {
+            const cursor = topRatedData.find();
+            const result = await cursor.toArray();
+            res.send(result)
         })
 
         app.post('/post', async (req, res) => {
